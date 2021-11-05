@@ -10,7 +10,9 @@ namespace WpfApp1
 {
 	class MainViewModel : INotifyPropertyChanged
 	{
-		public ICommand MyCommand { get; }
+		public ICommand GetButtonArgument { get; }
+		public ICommand Calculate { get; }
+		public ICommand Delete { get; }
 
 		private string _expression;
 
@@ -26,7 +28,9 @@ namespace WpfApp1
 
 		public MainViewModel()
 		{
-			MyCommand = new RelayCommand<string>(s => Expression+="123");
+			GetButtonArgument = new RelayCommand<string>(x => Expression += x);
+			Calculate = new RelayCommand(() => Expression = Expression);
+			Delete = new RelayCommand(() => Expression = Expression!="" ? Expression.Remove(Expression.Length-1,1) : "");
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

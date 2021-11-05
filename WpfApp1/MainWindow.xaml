@@ -29,27 +29,27 @@
                    Text="{Binding Expression, UpdateSourceTrigger=PropertyChanged}"
                    />
 
-        <Button Grid.Column="0" Grid.Row="1" Content="9" FontSize="48"></Button>
-        <Button Grid.Column="1" Grid.Row="1" Content="8" FontSize="48"></Button>
-        <Button Grid.Column="2" Grid.Row="1" Content="7" FontSize="48"></Button>
-        <Button Grid.Column="0" Grid.Row="2" Content="6" FontSize="48"></Button>
-        <Button Grid.Column="1" Grid.Row="2" Content="5" FontSize="48"></Button>
-        <Button Grid.Column="2" Grid.Row="2" Content="4" FontSize="48"></Button>
-        <Button Grid.Column="0" Grid.Row="3" Content="3" FontSize="48"></Button>
-        <Button Grid.Column="1" Grid.Row="3" Content="2" FontSize="48"></Button>
-        <Button Grid.Column="2" Grid.Row="3" Content="1" FontSize="48"></Button>
-        <Button Grid.Column="1" Grid.Row="4" Content="0" FontSize="48"></Button>
+        <Button Grid.Column="0" Grid.Row="1" Content="9" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="9"></Button>
+        <Button Grid.Column="1" Grid.Row="1" Content="8" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="8"></Button>
+        <Button Grid.Column="2" Grid.Row="1" Content="7" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="7"></Button>
+        <Button Grid.Column="0" Grid.Row="2" Content="6" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="6"></Button>
+        <Button Grid.Column="1" Grid.Row="2" Content="5" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="5"></Button>
+        <Button Grid.Column="2" Grid.Row="2" Content="4" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="4"></Button>
+        <Button Grid.Column="0" Grid.Row="3" Content="3" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="3"></Button>
+        <Button Grid.Column="1" Grid.Row="3" Content="2" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="2"></Button>
+        <Button Grid.Column="2" Grid.Row="3" Content="1" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="1"></Button>
+        <Button Grid.Column="1" Grid.Row="4" Content="0" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="0"></Button>
 
-        <Button Grid.Column="3" Grid.Row="1" Content="+" FontSize="48"></Button>
-        <Button Grid.Column="3" Grid.Row="2" Content="-" FontSize="48"></Button>
-        <Button Grid.Column="3" Grid.Row="3" Content="*" FontSize="48"></Button>
-        <Button Grid.Column="3" Grid.Row="4" Content="/" FontSize="48"></Button>
+        <Button Grid.Column="3" Grid.Row="1" Content="+" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="+"></Button>
+        <Button Grid.Column="3" Grid.Row="2" Content="-" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="-"></Button>
+        <Button Grid.Column="3" Grid.Row="3" Content="*" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="*"></Button>
+        <Button Grid.Column="3" Grid.Row="4" Content="/" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="/"></Button>
 
-        <Button Grid.Column="0" Grid.Row="4" Content="DEL" FontSize="48"></Button>
-        <Button Grid.Column="2" Grid.Row="4" Content="=" FontSize="48" 
-                Command="{Binding MyCommand}">
+        <Button Grid.Column="0" Grid.Row="4" Content="DEL" FontSize="48" Command="{Binding Delete}"></Button>
+        <Button Grid.Column="2" Grid.Row="4" Content="=" FontSize="48" Command="{Binding Calculate}"></Button>
 
-        </Button>
-        
     </Grid>
+    <Window.InputBindings>
+        <KeyBinding Key="" Command="{Binding GetButtonArgument}" CommandParameter="1"/>
+    </Window.InputBindings>
 </Window>
