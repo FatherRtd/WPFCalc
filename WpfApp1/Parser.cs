@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Data;
 
 namespace WpfApp1
 {
 	class Parser
 	{
-		public string OutputString { get; set; }
-
-		public string ParseExpression(string inputString)
+		public static string Parse(string inputString)
 		{
-			inputString.Remove(0, 1);
-
-			return OutputString;
+			DataTable dt = new DataTable();
+			return dt.Compute(inputString, "").ToString();
 		}
-
 	}
 }

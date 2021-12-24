@@ -5,9 +5,62 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800"
+        Title="MainWindow" Height="600" Width="500"
         d:DataContext="{d:DesignInstance local:MainViewModel}">
 
+    <Window.Resources>
+        <Style x:Key="Keyboard" TargetType="{x:Type Button}">
+            <Setter Property="FontSize" Value="48"/>
+            <Setter Property="Command" Value="{Binding GetButtonArgument}"/>
+            <Setter Property="CommandParameter" Value="{Binding RelativeSource = {RelativeSource Self},Path=Content}"/>
+        </Style>
+
+        <Style x:Key="HistoryKey" TargetType="{x:Type Button}">
+            <Setter Property="Content" Value="History"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Opacity" Value="0.6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="1" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="ExpressionText" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#FF7EB4EA"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="BorderThickness" Value="10"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="48"/>
+            <!--<Setter Property="IsEnabled" Value="False"/>-->
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#FF7EB4EA"/>
+                </Trigger>
+                <DataTrigger Binding="{Binding IsError, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                    <Setter Property="BorderBrush" Value="Crimson"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="HistoryList" TargetType="ListBox">
+            <!--<Setter Property="Visibility" Value="{Binding IsShowHistory, UpdateSourceTrigger=PropertyChanged}"/>-->
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="BorderThickness" Value="10"/>
+            <Setter Property="ItemsSource" Value="{Binding History, UpdateSourceTrigger=PropertyChanged}"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="BorderBrush" Value="#FF7EB4EA"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsShowHistory}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -21,35 +74,43 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <TextBox Grid.ColumnSpan="4" Text="{Binding Expression, UpdateSourceTrigger=PropertyChanged}" 
+                 Style="{StaticResource ExpressionText}"/>
 
-        <TextBox Grid.ColumnSpan="4" FontSize="48" 
-                   VerticalAlignment="Center" TextAlignment="Right"
-                   Text="{Binding Expression, UpdateSourceTrigger=PropertyChanged}"
-                   />
+        <Button Grid.Column="0" Grid.Row="2" Content="7" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="1" Grid.Row="2" Content="8" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="2" Grid.Row="2" Content="9" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="0" Grid.Row="3" Content="4" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="1" Grid.Row="3" Content="5" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="2" Grid.Row="3" Content="6" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="0" Grid.Row="4" Content="1" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="1" Grid.Row="4" Content="2" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="2" Grid.Row="4" Content="3" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.ColumnSpan="2" Grid.Row="5" Content="0" Style="{StaticResource Keyboard}"></Button>
 
-        <Button Grid.Column="0" Grid.Row="1" Content="9" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="9"></Button>
-        <Button Grid.Column="1" Grid.Row="1" Content="8" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="8"></Button>
-        <Button Grid.Column="2" Grid.Row="1" Content="7" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="7"></Button>
-        <Button Grid.Column="0" Grid.Row="2" Content="6" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="6"></Button>
-        <Button Grid.Column="1" Grid.Row="2" Content="5" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="5"></Button>
-        <Button Grid.Column="2" Grid.Row="2" Content="4" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="4"></Button>
-        <Button Grid.Column="0" Grid.Row="3" Content="3" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="3"></Button>
-        <Button Grid.Column="1" Grid.Row="3" Content="2" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="2"></Button>
-        <Button Grid.Column="2" Grid.Row="3" Content="1" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="1"></Button>
-        <Button Grid.Column="1" Grid.Row="4" Content="0" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="0"></Button>
+        <Button Grid.Column="3" Grid.Row="1" Content="+" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="3" Grid.Row="2" Content="-" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="3" Grid.Row="3" Content="*" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="3" Grid.Row="4" Content="/" Style="{StaticResource Keyboard}"></Button>
 
-        <Button Grid.Column="3" Grid.Row="1" Content="+" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="+"></Button>
-        <Button Grid.Column="3" Grid.Row="2" Content="-" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="-"></Button>
-        <Button Grid.Column="3" Grid.Row="3" Content="*" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="*"></Button>
-        <Button Grid.Column="3" Grid.Row="4" Content="/" FontSize="48" Command="{Binding GetButtonArgument}" CommandParameter="/"></Button>
+        <Button Grid.Column="1" Grid.Row="1" Content="(" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="2" Grid.Row="1" Content=")" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="2" Grid.Row="5" Content="," Style="{StaticResource Keyboard}"></Button>
 
-        <Button Grid.Column="0" Grid.Row="4" Content="DEL" FontSize="48" Command="{Binding Delete}"></Button>
-        <Button Grid.Column="2" Grid.Row="4" Content="=" FontSize="48" Command="{Binding Calculate}"></Button>
+        <Button Grid.Column="0" Grid.Row="1" FontSize="48" Content="С" Command="{Binding Delete}"></Button>
+        <Button Grid.Column="3" Grid.Row="5" FontSize="48" Content="=" Command="{Binding Calculate}"></Button>
 
+        <ListBox Style="{StaticResource HistoryList}" Grid.ColumnSpan="2" Grid.RowSpan="4"/>
+
+        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource HistoryKey}" Command="{Binding ShowHistory}"/>
     </Grid>
+    
     <Window.InputBindings>
-        <KeyBinding Key="" Command="{Binding GetButtonArgument}" CommandParameter="1"/>
+        <KeyBinding Key="D0" Command="{Binding GetButtonArgument}" CommandParameter="0"/>
+        <KeyBinding Key="D0" Command="{Binding GetButtonArgument}" CommandParameter="0"/>
     </Window.InputBindings>
+    
 </Window>
