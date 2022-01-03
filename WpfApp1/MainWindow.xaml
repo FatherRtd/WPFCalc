@@ -124,11 +124,12 @@
         <KeyBinding Key="OemMinus" Command="{Binding GetButtonArgument}" CommandParameter="-"/>
         <KeyBinding Key="OemPlus" Modifiers="Shift" Command="{Binding GetButtonArgument}" CommandParameter="+"/>
         <KeyBinding Key="D8" Modifiers="Shift" Command="{Binding GetButtonArgument}" CommandParameter="*"/>
-        <KeyBinding Key="Divide" Command="{Binding GetButtonArgument}" CommandParameter="/"/>
+        <KeyBinding Key="Oem2" Command="{Binding GetButtonArgument}" CommandParameter="/"/>
 
         <KeyBinding Key="D9" Modifiers="Shift" Command="{Binding GetButtonArgument}" CommandParameter="("/>
         <KeyBinding Key="D0" Modifiers="Shift" Command="{Binding GetButtonArgument}" CommandParameter=")"/>
         <KeyBinding Key="OemPlus" Command="{Binding Calculate}"/>
+        <KeyBinding Key="Enter" Command="{Binding Calculate}"/>
 
         <KeyBinding Key="C" Command="{Binding Clear}"/>
         <KeyBinding Key="Back" Command="{Binding Delete}"/>
