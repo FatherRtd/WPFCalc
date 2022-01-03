@@ -89,7 +89,8 @@
         <Button Grid.Column="0" Grid.Row="4" Content="1" Style="{StaticResource Keyboard}"></Button>
         <Button Grid.Column="1" Grid.Row="4" Content="2" Style="{StaticResource Keyboard}"></Button>
         <Button Grid.Column="2" Grid.Row="4" Content="3" Style="{StaticResource Keyboard}"></Button>
-        <Button Grid.ColumnSpan="2" Grid.Row="5" Content="0" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="0" Grid.Row="5" Content="0" Style="{StaticResource Keyboard}"></Button>
+        <Button Grid.Column="1" Grid.Row="5" FontSize="48" Content="С" Command="{Binding Clear}"></Button>
 
         <Button Grid.Column="3" Grid.Row="1" Content="+" Style="{StaticResource Keyboard}"></Button>
         <Button Grid.Column="3" Grid.Row="2" Content="-" Style="{StaticResource Keyboard}"></Button>
@@ -100,17 +101,37 @@
         <Button Grid.Column="2" Grid.Row="1" Content=")" Style="{StaticResource Keyboard}"></Button>
         <Button Grid.Column="2" Grid.Row="5" Content="," Style="{StaticResource Keyboard}"></Button>
 
-        <Button Grid.Column="0" Grid.Row="1" FontSize="48" Content="С" Command="{Binding Delete}"></Button>
+        <Button Grid.Column="0" Grid.Row="1" FontSize="48" Content="СE" Command="{Binding Delete}"></Button>
         <Button Grid.Column="3" Grid.Row="5" FontSize="48" Content="=" Command="{Binding Calculate}"></Button>
 
-        <ListBox Style="{StaticResource HistoryList}" Grid.ColumnSpan="2" Grid.RowSpan="4"/>
+        <ListBox Style="{StaticResource HistoryList}" Grid.ColumnSpan="2" Grid.RowSpan="4" HorizontalAlignment="Left"/>
 
         <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource HistoryKey}" Command="{Binding ShowHistory}"/>
     </Grid>
     
     <Window.InputBindings>
         <KeyBinding Key="D0" Command="{Binding GetButtonArgument}" CommandParameter="0"/>
-        <KeyBinding Key="D0" Command="{Binding GetButtonArgument}" CommandParameter="0"/>
+        <KeyBinding Key="D1" Command="{Binding GetButtonArgument}" CommandParameter="1"/>
+        <KeyBinding Key="D2" Command="{Binding GetButtonArgument}" CommandParameter="2"/>
+        <KeyBinding Key="D3" Command="{Binding GetButtonArgument}" CommandParameter="3"/>
+        <KeyBinding Key="D4" Command="{Binding GetButtonArgument}" CommandParameter="4"/>
+        <KeyBinding Key="D5" Command="{Binding GetButtonArgument}" CommandParameter="5"/>
+        <KeyBinding Key="D6" Command="{Binding GetButtonArgument}" CommandParameter="6"/>
+        <KeyBinding Key="D7" Command="{Binding GetButtonArgument}" CommandParameter="7"/>
+        <KeyBinding Key="D8" Command="{Binding GetButtonArgument}" CommandParameter="8"/>
+        <KeyBinding Key="D9" Command="{Binding GetButtonArgument}" CommandParameter="9"/>
+
+        <KeyBinding Key="OemMinus" Command="{Binding GetButtonArgument}" CommandParameter="-"/>
+        <KeyBinding Key="OemPlus" Modifiers="Shift" Command="{Binding GetButtonArgument}" CommandParameter="+"/>
+        <KeyBinding Key="D8" Modifiers="Shift" Command="{Binding GetButtonArgument}" CommandParameter="*"/>
+        <KeyBinding Key="Divide" Command="{Binding GetButtonArgument}" CommandParameter="/"/>
+
+        <KeyBinding Key="D9" Modifiers="Shift" Command="{Binding GetButtonArgument}" CommandParameter="("/>
+        <KeyBinding Key="D0" Modifiers="Shift" Command="{Binding GetButtonArgument}" CommandParameter=")"/>
+        <KeyBinding Key="OemPlus" Command="{Binding Calculate}"/>
+
+        <KeyBinding Key="C" Command="{Binding Clear}"/>
+        <KeyBinding Key="Back" Command="{Binding Delete}"/>
     </Window.InputBindings>
     
 </Window>

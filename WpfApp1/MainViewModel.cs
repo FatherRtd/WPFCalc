@@ -1,29 +1,18 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Dapper;
 using GalaSoft.MvvmLight.Command;
 
 namespace WpfApp1
 {
-	class DatabaseItem
-	{
-		public string Expression { get; set; }
-
-		public DatabaseItem(string expression)
-		{
-			Expression = expression;
-		}
-	}
-
 	class MainViewModel : INotifyPropertyChanged
 	{
 		public ICommand GetButtonArgument { get; }
 		public ICommand Calculate { get; }
 		public ICommand Delete { get; }
+		public ICommand Clear { get; }
 		public ICommand ShowHistory { get; }
 
 		public ObservableCollection<string> History { get; set; }
@@ -66,7 +55,7 @@ namespace WpfApp1
 		public MainViewModel()
 		{
 			IsShowHistory = false;
-			GetButtonArgument = new RelayCommand<string>(AddArgument);//x => Expression += x
+			GetButtonArgument = new RelayCommand<string>(x => Expression += x);
 			History = new ObservableCollection<string>();
 
 			Calculate = new RelayCommand<string>(x =>
@@ -74,20 +63,27 @@ namespace WpfApp1
 				string str = Expression;
 				try
 				{
-					Expression = Parser.Parse(Expression.Replace(',','.'));
+					Expression = Calculator.Parse(Expression.Replace(',','.'));
+					str += "=" + Expression;
+					History.Add(str);
+					Calculator.SaveHistoryInDatabase(new DatabaseItem(str));
+					Calculator.SaveHistoryInFile(DateTime.Now.ToString("d") + ", " + str);
 				}
 				catch
 				{
 					Expression = "Ошибка в выражении";
 					IsError = true;
 				}
-				str += "=" + Expression;
-				History.Add(str);
-				SaveHistoryInDatabase(new DatabaseItem(str));
-				SaveHistoryInFile(DateTime.Now.ToString("d") + ", " + str);
 			});
 
 			Delete = new RelayCommand(() =>
+			{
+				if(IsError || String.IsNullOrEmpty(Expression))
+					return;
+				Expression = Expression.Remove(Expression.Length-1);
+			});
+
+			Clear = new RelayCommand(() =>
 			{
 				Expression = "";
 				IsError = false;
@@ -96,39 +92,9 @@ namespace WpfApp1
 			ShowHistory = new RelayCommand(() => IsShowHistory = !IsShowHistory);
 
 
-			LoadHistoryFromDatabase();
-		}
-
-		private void AddArgument(string arg)
-		{
-			Expression += arg;
-		}
-
-		private void SaveHistoryInFile(string str)
-		{
-			var path = @"C:\Users\Евгений\Desktop\Новая папка\уник\трпо\Калькулятор\History.txt";
-			File.AppendAllText(path, str+'\n');
-		}
-
-		private void SaveHistoryInDatabase(DatabaseItem dbItem)
-		{
-			using (var connection = new System.Data.SQLite.SQLiteConnection("Data Source=C:\\Users\\Евгений\\Desktop\\Новая папка\\уник\\трпо\\SQLiteStudio\\CalculatorHistory.db"))
+			foreach (var VARIABLE in Calculator.LoadHistoryFromDatabase())
 			{
-				connection.Open();
-				var result = connection.Query<DatabaseItem>($"insert into History (Expression) values ('{dbItem.Expression}')");
-			}
-		}
-
-		private void LoadHistoryFromDatabase()
-		{
-			using (var connection = new System.Data.SQLite.SQLiteConnection("Data Source=C:\\Users\\Евгений\\Desktop\\Новая папка\\уник\\трпо\\SQLiteStudio\\CalculatorHistory.db"))
-			{
-				connection.Open();
-				var result = connection.Query<DatabaseItem>("select * from History");
-				foreach (var VARIABLE in result)
-				{
-					History.Add(VARIABLE.Expression);
-				}
+				History.Add(VARIABLE);
 			}
 		}
 
